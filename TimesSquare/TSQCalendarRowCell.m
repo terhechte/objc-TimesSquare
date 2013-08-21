@@ -132,6 +132,8 @@
     self.selectedButton.hidden = YES;
     self.indexOfSelectedButton = -1;
     
+    bool conformsToProtocol = [self.calendarView respondsToSelector:@selector(calendarRowCell:modifyButton:forDate:buttonType:)];
+    
     for (NSUInteger index = 0; index < self.daysInWeek; index++) {
         NSString *title = [self.dayFormatter stringFromDate:date];
         NSString *accessibilityLabel = [self.accessibilityFormatter stringFromDate:date];
@@ -139,6 +141,19 @@
         [self.dayButtons[index] setAccessibilityLabel:accessibilityLabel];
         [self.notThisMonthButtons[index] setTitle:title forState:UIControlStateNormal];
         [self.notThisMonthButtons[index] setAccessibilityLabel:accessibilityLabel];
+        
+        // format the button
+        if (conformsToProtocol)
+        {
+            [(id<TSQCalendarCellProtocol>)self.calendarView calendarRowCell:self
+                                                               modifyButton:self.dayButtons[index]
+                                                                    forDate:date
+                                                                 buttonType: TSQDayButton];
+            [(id<TSQCalendarCellProtocol>)self.calendarView calendarRowCell:self
+                                                               modifyButton:self.notThisMonthButtons[index]
+                                                                    forDate:date
+                                                                 buttonType: TSQNotThisMonthButton];
+        }
         
         NSDateComponents *thisDateComponents = [self.calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:date];
         
@@ -151,6 +166,16 @@
         } else {
 
             if ([self.todayDateComponents isEqual:thisDateComponents]) {
+                
+                
+                if (conformsToProtocol)
+                {
+                    [(id<TSQCalendarCellProtocol>)self.calendarView calendarRowCell:self
+                                                                       modifyButton:self.todayButton
+                                                                            forDate:date
+                                                                         buttonType: TSQTodayButton];
+                }
+                
                 self.todayButton.hidden = NO;
                 [self.todayButton setTitle:title forState:UIControlStateNormal];
                 [self.todayButton setAccessibilityLabel:accessibilityLabel];

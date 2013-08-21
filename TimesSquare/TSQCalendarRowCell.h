@@ -9,6 +9,14 @@
 
 #import "TSQCalendarCell.h"
 
+typedef enum TSQCalendarButtonType {
+    TSQDayButton = 0,
+    TSQNotThisMonthButton = 1,
+    TSQTodayButton = 2,
+    TSQSelectedButton = 3
+    }TSQCalendarButtonType ;
+
+
 /** The `TSQCalendarRowCell` class is a cell that represents one week in the calendar.
  
  Each of the seven columns can represent a day that's in this month, a day that's not in this month, a selected day, today, or an unselected day. The cell uses several images placed strategically to achieve the effect.
@@ -66,3 +74,11 @@
 - (void)selectColumnForDate:(NSDate *)date;
 
 @end
+
+/** The TSQCalendarRowCellProtocol helps to move some of the color and logic decisions
+    into a delegate by allowing him to modify the cell before it will be displayed
+ */
+@protocol TSQCalendarCellProtocol <NSObject>
+- (void)calendarRowCell:(TSQCalendarRowCell *)rowCell modifyButton:(UIButton*)button forDate:(NSDate*)date buttonType:(TSQCalendarButtonType)buttonType;
+@end
+

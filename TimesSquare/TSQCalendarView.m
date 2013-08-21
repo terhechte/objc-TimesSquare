@@ -323,4 +323,13 @@
     return [self.calendar dateFromComponents:components];
 }
 
+
+#pragma mark TSQCalendarCellProtocol
+- (void)calendarRowCell:(TSQCalendarRowCell *)rowCell modifyButton:(UIButton*)button forDate:(NSDate*)date buttonType:(TSQCalendarButtonType)buttonType
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:modifyButton:forDate:buttonType:)])
+    {
+        [self.delegate calendarView:self modifyButton:button forDate:date buttonType:buttonType];
+    }
+}
 @end

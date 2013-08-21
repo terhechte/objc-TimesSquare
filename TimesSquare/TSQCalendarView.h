@@ -8,7 +8,7 @@
 //  which Square, Inc. licenses this file to you.
 
 #import <UIKit/UIKit.h>
-
+#import "TSQCalendarRowCell.h"
 
 @protocol TSQCalendarViewDelegate;
 
@@ -130,5 +130,13 @@
  @param date Midnight on the date being selected.
  */
 - (void)calendarView:(TSQCalendarView *)calendarView didSelectDate:(NSDate *)date;
+
+/** Ask the delegate to modify each UIButton
+ 
+ @param calendarView The calendar view that is selecting a date.
+ @param dateButton The button that should be modified
+ @param date Midnight on the date being selected.
+ */
+- (void)calendarView:(TSQCalendarView *)calendarView modifyButton:(UIButton*)dateButton forDate:(NSDate*)date buttonType:(TSQCalendarButtonType)buttonType;
 
 @end
