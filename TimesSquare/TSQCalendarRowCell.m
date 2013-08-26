@@ -122,6 +122,8 @@
         [self createNotThisMonthButtons];
         [self createTodayButton];
         [self createSelectedButton];
+        
+        
     }
 
     NSDateComponents *offset = [NSDateComponents new];
@@ -133,6 +135,14 @@
     self.indexOfSelectedButton = -1;
     
     bool conformsToProtocol = [self.calendarView respondsToSelector:@selector(calendarRowCell:modifyButton:forDate:buttonType:)];
+    
+    if (conformsToProtocol)
+    {
+        [(id<TSQCalendarCellProtocol>)self.calendarView calendarRowCell:self
+                                                           modifyButton:self.selectedButton
+                                                                forDate:nil
+                                                             buttonType: TSQSelectedButton];
+    }
     
     for (NSUInteger index = 0; index < self.daysInWeek; index++) {
         NSString *title = [self.dayFormatter stringFromDate:date];
