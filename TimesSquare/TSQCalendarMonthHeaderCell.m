@@ -30,6 +30,7 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
     }
     
     [self createHeaderLabels];
+    self.styleClass = @"calendarHeader";
     
     return self;
 }
@@ -73,10 +74,10 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
         label.textAlignment = UITextAlignmentCenter;
         label.text = [dayFormatter stringFromDate:referenceDate];
         label.font = [UIFont boldSystemFontOfSize:12.f];
-        label.backgroundColor = self.backgroundColor;
         label.textColor = self.textColor;
         label.shadowColor = [UIColor whiteColor];
         label.shadowOffset = self.shadowOffset;
+        label.opaque = NO;
         [label sizeToFit];
         headerLabels[ordinality - 1] = label;
         [self.contentView addSubview:label];
@@ -118,9 +119,9 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor;
 {
-    [super setBackgroundColor:backgroundColor];
+    //[super setBackgroundColor:backgroundColor];
     for (UILabel *label in self.headerLabels) {
-        label.backgroundColor = backgroundColor;
+        //label.backgroundColor = backgroundColor;
     }
 }
 
